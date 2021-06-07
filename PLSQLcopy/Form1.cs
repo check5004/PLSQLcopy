@@ -33,6 +33,7 @@ namespace PLSQLcopy {
             SqlPlusPastePlay();
         }
 
+
         /// <summary>
         /// クリップボードにテキストがコピーされると呼び出される
         /// </summary>

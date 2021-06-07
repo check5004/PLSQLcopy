@@ -19,6 +19,7 @@ namespace PLSQLcopy {
             //"DECLARE",
             //"BEGIN",
             "END;",
+            "end;",
             "/"
         };
 
@@ -27,12 +28,11 @@ namespace PLSQLcopy {
             viewer = new MyClipboardViewer(this);
             viewer.ClipboardHandler += this.OnClipBoardChanged;
             InitializeComponent();
-        }
 
-        private void button1_Click(object sender, EventArgs e) {
-            SqlPlusPastePlay();
+            textBox1.Text = Properties.Settings.Default.username;
+            textBox2.Text = Properties.Settings.Default.password;
+            textBox3.Text = Properties.Settings.Default.tablename;
         }
-
 
         /// <summary>
         /// クリップボードにテキストがコピーされると呼び出される
@@ -63,7 +63,7 @@ namespace PLSQLcopy {
             if (textBox1.Text.Length >= 5) {
                 try {
                     // window select
-                    Microsoft.VisualBasic.Interaction.AppActivate(@"C:\app\CRCL082\product\12.2.0\dbhome_1\bin\sqlplus.exe");
+                    Microsoft.VisualBasic.Interaction.AppActivate($@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe");
 
                     // paste -> enter
                     SendKeys.Send("^v{ENTER}");
@@ -81,7 +81,7 @@ namespace PLSQLcopy {
             if (textBox1.Text.Length >= 5) {
                 try {
                     // open
-                    System.Diagnostics.Process.Start(@"C:\app\CRCL082\product\12.2.0\dbhome_1\bin\sqlplus.exe");
+                    System.Diagnostics.Process.Start($@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe");
                     Thread.Sleep(500);
                     // login
                     while (true) {
@@ -92,7 +92,7 @@ namespace PLSQLcopy {
                                 f.TopMost = false;
                             }
                         } else {
-                            Microsoft.VisualBasic.Interaction.AppActivate(@"C:\app\CRCL082\product\12.2.0\dbhome_1\bin\sqlplus.exe");
+                            Microsoft.VisualBasic.Interaction.AppActivate($@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe");
                             Thread.Sleep(300);
 
                             break;
@@ -117,7 +117,20 @@ namespace PLSQLcopy {
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e) {
+            Properties.Settings.Default.username = this.textBox1.Text;
+            Properties.Settings.Default.password = this.textBox2.Text;
+            Properties.Settings.Default.tablename = this.textBox3.Text;
+            Properties.Settings.Default.Save();
+        }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            Properties.Settings.Default.username = this.textBox1.Text;
+            Properties.Settings.Default.password = this.textBox2.Text;
+            Properties.Settings.Default.tablename = this.textBox3.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void Form1_Load(object sender, EventArgs e) {
         }
     }
 }

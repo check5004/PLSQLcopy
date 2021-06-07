@@ -58,6 +58,7 @@ namespace PLSQLcopy {
             this.textBox2.Size = new System.Drawing.Size(211, 19);
             this.textBox2.TabIndex = 3;
             this.textBox2.Text = "PRACTICE";
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox3
             // 
@@ -66,6 +67,7 @@ namespace PLSQLcopy {
             this.textBox3.Size = new System.Drawing.Size(211, 19);
             this.textBox3.TabIndex = 4;
             this.textBox3.Text = "LOG1441";
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 
@@ -108,6 +110,7 @@ namespace PLSQLcopy {
             this.Controls.Add(this.StartSqlPlus);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

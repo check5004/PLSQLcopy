@@ -16,8 +16,6 @@ namespace PLSQLcopy {
         private string loginCode = "";
         private string clipbordStr = "";
         private string[] Reservation = {
-            //"DECLARE",
-            //"BEGIN",
             "END;",
             "end;",
             "/"
@@ -116,14 +114,12 @@ namespace PLSQLcopy {
             SqlPlusStart();
         }
 
+        /// <summary>
+        /// テキスト変更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBox1_TextChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.username = this.textBox1.Text;
-            Properties.Settings.Default.password = this.textBox2.Text;
-            Properties.Settings.Default.tablename = this.textBox3.Text;
-            Properties.Settings.Default.Save();
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
             Properties.Settings.Default.username = this.textBox1.Text;
             Properties.Settings.Default.password = this.textBox2.Text;
             Properties.Settings.Default.tablename = this.textBox3.Text;

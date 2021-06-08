@@ -37,6 +37,7 @@ namespace PLSQLcopy {
             this.sQLPlusファイルパス指定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxSqlPlusPath = new System.Windows.Forms.ToolStripTextBox();
             this.デフォルトに戻すToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.確定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,6 +147,7 @@ namespace PLSQLcopy {
             // 
             this.sQLPlusファイルパス指定ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.textBoxSqlPlusPath,
+            this.確定ToolStripMenuItem,
             this.デフォルトに戻すToolStripMenuItem});
             this.sQLPlusファイルパス指定ToolStripMenuItem.Name = "sQLPlusファイルパス指定ToolStripMenuItem";
             this.sQLPlusファイルパス指定ToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
@@ -153,15 +155,23 @@ namespace PLSQLcopy {
             // 
             // textBoxSqlPlusPath
             // 
-            this.textBoxSqlPlusPath.Font = new System.Drawing.Font("Yu Gothic UI", 9F);
             this.textBoxSqlPlusPath.Name = "textBoxSqlPlusPath";
-            this.textBoxSqlPlusPath.Size = new System.Drawing.Size(180, 23);
+            this.textBoxSqlPlusPath.Size = new System.Drawing.Size(200, 23);
             // 
             // デフォルトに戻すToolStripMenuItem
             // 
             this.デフォルトに戻すToolStripMenuItem.Name = "デフォルトに戻すToolStripMenuItem";
-            this.デフォルトに戻すToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+            this.デフォルトに戻すToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
             this.デフォルトに戻すToolStripMenuItem.Text = "デフォルトに戻す";
+            this.デフォルトに戻すToolStripMenuItem.Click += new System.EventHandler(this.デフォルトに戻すToolStripMenuItem_Click);
+            this.デフォルトに戻すToolStripMenuItem.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // 確定ToolStripMenuItem
+            // 
+            this.確定ToolStripMenuItem.Name = "確定ToolStripMenuItem";
+            this.確定ToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
+            this.確定ToolStripMenuItem.Text = "変更を保存する";
+            this.確定ToolStripMenuItem.Click += new System.EventHandler(this.確定ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -201,6 +211,7 @@ namespace PLSQLcopy {
         private System.Windows.Forms.ToolStripMenuItem sQLPlusファイルパス指定ToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox textBoxSqlPlusPath;
         private System.Windows.Forms.ToolStripMenuItem デフォルトに戻すToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 確定ToolStripMenuItem;
     }
 }
 

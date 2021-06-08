@@ -58,5 +58,17 @@ namespace PLSQLcopy.Properties {
                 this["tablename"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("default")]
+        public string sqlplusapppath {
+            get {
+                return ((string)(this["sqlplusapppath"]));
+            }
+            set {
+                this["sqlplusapppath"] = value;
+            }
+        }
     }
 }

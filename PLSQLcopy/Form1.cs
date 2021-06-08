@@ -7,6 +7,7 @@ namespace PLSQLcopy {
         private MyClipboardViewer viewer;
         private string loginCode = "";
         private string clipbordStr = "";
+        private string sqlPlusAppPath = "";
         private string[] Reservation = {
             "END;",
             "end;",
@@ -22,6 +23,13 @@ namespace PLSQLcopy {
             textBox1.Text = Properties.Settings.Default.username;
             textBox2.Text = Properties.Settings.Default.password;
             textBox3.Text = Properties.Settings.Default.tablename;
+            sqlPlusAppPath = $@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe";
+            if (sqlPlusAppPath == Properties.Settings.Default.sqlplusapppath || Properties.Settings.Default.sqlplusapppath == "") {
+                resetPath();
+            } else {
+                textBoxSqlPlusPath.Text = Properties.Settings.Default.sqlplusapppath;
+                sqlPlusAppPath = Properties.Settings.Default.sqlplusapppath;
+            }
         }
 
         /// <summary>
@@ -53,7 +61,7 @@ namespace PLSQLcopy {
             if (textBox1.Text.Length >= 5) {
                 try {
                     // window select
-                    Microsoft.VisualBasic.Interaction.AppActivate($@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe");
+                    Microsoft.VisualBasic.Interaction.AppActivate(sqlPlusAppPath);
 
                     // paste -> enter
                     SendKeys.Send("^v{ENTER}");
@@ -70,8 +78,22 @@ namespace PLSQLcopy {
         private void SqlPlusStart() {
             if (textBox1.Text.Length >= 5) {
                 try {
+                    try {
+                        Microsoft.VisualBasic.Interaction.AppActivate(sqlPlusAppPath);
+                        this.Activate();
+                        //メッセージボックスを表示する
+                        DialogResult result = MessageBox.Show("SQL Plusは既に起動しています。\n起動しますか？",
+                            "質問",
+                            MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Exclamation,
+                            MessageBoxDefaultButton.Button2);
+
+                        if (result == DialogResult.Cancel) {
+                            return;
+                        }
+                    } catch (Exception) { }
                     // open
-                    System.Diagnostics.Process.Start($@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe");
+                    System.Diagnostics.Process.Start(sqlPlusAppPath);
                     Thread.Sleep(500);
                     // login
                     while (true) {
@@ -82,7 +104,7 @@ namespace PLSQLcopy {
                                 f.TopMost = false;
                             }
                         } else {
-                            Microsoft.VisualBasic.Interaction.AppActivate($@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe");
+                            Microsoft.VisualBasic.Interaction.AppActivate(sqlPlusAppPath);
                             Thread.Sleep(300);
 
                             break;
@@ -91,7 +113,7 @@ namespace PLSQLcopy {
                     SendKeys.Send(loginCode + "{ENTER}");
                     SendKeys.Send("SET SERVEROUTPUT ON{ENTER}");
                 } catch (Exception) {
-                    MessageBox.Show("OpenError!!");
+                    MessageBox.Show("SQL Plusが開けません\nSQL Plusのパスが間違っていないか確認してください。");
                 }
             }
         }
@@ -119,6 +141,59 @@ namespace PLSQLcopy {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
+        }
+
+        /// <summary>
+        /// SQL Plus ファイルパス：デフォルトに戻すボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void デフォルトに戻すToolStripMenuItem_Click(object sender, EventArgs e) {
+            //メッセージボックスを表示する
+            DialogResult result = MessageBox.Show("パスをデフォルトに戻してもよろしいですか？",
+                "質問",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button2);
+
+            //何が選択されたか調べる
+            if (result == DialogResult.OK) {
+                //「OK」が選択された時
+                resetPath();
+            }
+        }
+
+        /// <summary>
+        /// SQL Plus のパスをデフォルトに戻す
+        /// </summary>
+        private void resetPath() {
+            sqlPlusAppPath = $@"C:\app\{System.Net.Dns.GetHostName()}\product\12.2.0\dbhome_1\bin\sqlplus.exe";
+            textBoxSqlPlusPath.Text = sqlPlusAppPath;
+            Properties.Settings.Default.sqlplusapppath = sqlPlusAppPath;
+            Properties.Settings.Default.Save();
+        }
+
+
+        /// <summary>
+        /// SQL Plus ファイルパス：変更ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 確定ToolStripMenuItem_Click(object sender, EventArgs e) {
+            //メッセージボックスを表示する
+            DialogResult result = MessageBox.Show("変更したパスを適用しますか？",
+                "質問",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button2);
+
+            //何が選択されたか調べる
+            if (result == DialogResult.OK) {
+                //「OK」が選択された時
+                Properties.Settings.Default.sqlplusapppath = this.textBoxSqlPlusPath.Text;
+                sqlPlusAppPath = this.textBoxSqlPlusPath.Text;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }
